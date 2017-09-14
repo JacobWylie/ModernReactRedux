@@ -17,8 +17,12 @@ class App extends Component {
 			selectedVideo: null
 		};
 
+		this.videoSearch('javascript');
+	}
+
+	videoSearch(term) {
 		// Make an API call to search YouTube
-		YTSearch({key: API_KEY, term: "surfboards"}, videos => {
+		YTSearch({key: API_KEY, term: "term"}, videos => {
 			//es6 same key:value name typed as one word ie. {videos; videos} 
 			this.setState({ 
 				videos: videos,
