@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchWeather } from '../actions/index';
 
-export class SearchBar extends Component {
+class SearchBar extends Component {
 	constructor(props) {
 		super(props);
 
@@ -32,7 +32,7 @@ export class SearchBar extends Component {
 		return (
 			<form onSubmit={this.onFormSubmit} className="input-group">
 				<input 
-					placeholder="Get five-day forecasts for your favorite German cities"
+					placeholder="Enter city and country code - e.g. Berlin, DE or New York, US"
 					className="form-control"
 					value={this.state.term}
 					onChange={this.onInputChange}
