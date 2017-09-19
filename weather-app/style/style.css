@@ -1,0 +1,12 @@
+div.container h2 {
+	text-align: center;
+	margin: 40px;
+}
+
+form {
+	margin: 40px;
+}
+
+a[target='_blank']::before {
+	content: '\29C9';
+}
