@@ -10,3 +10,7 @@ form {
 a[target='_blank']::before {
 	content: '\29C9';
 }
+
+.click {
+	font-size: .6em;
+}
