@@ -1,41 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
+import Chart from '../components/chart';
+import GoogleMap from '../components/google_map';
 
 class WeatherList extends Component {
 	renderWeather(cityData) {
-		const name = cityData.city.name;
-		const country = cityData.city.country;
-		const temps = cityData.list.map(weather => weather.main.temp);
+		const { name, country } = cityData.city;
+		const temps = cityData.list.map(weather => weather.main.temp - 273.15); // kelvin to celcius
 		const wind = cityData.list.map(weather => weather.wind.speed);
 		const humidity = cityData.list.map(weather => weather.main.humidity);
 		const link = `https://openweathermap.org/city/${cityData.city.id}`;
+		const { lon, lat } = cityData.city.coord;
 
 		return(
 			<tr key={name}>
 				<td>
 					<a href={link} target='_blank'> 
-						{'  '}{name}, {country}
+						<span className="cityName">{'  '}{name}, {country}</span>
 					</a>
+					<GoogleMap lon={lon} lat={lat} />
 				</td>
-				<td>
-					<Sparklines height={100} width={180} data={temps}>
-						<SparklinesLine color='red' style={{ fill: "grey" }}/>
-						<SparklinesReferenceLine type="avg" />
-					</Sparklines>
-				</td>
-				<td>
-					<Sparklines height={120} width={180} data={wind}>
-						<SparklinesLine color='blue' style={{ fill: "grey" }}/>
-						<SparklinesReferenceLine type="avg" />
-					</Sparklines>
-				</td>
-				<td>
-					<Sparklines height={120} width={180} data={humidity}>
-						<SparklinesLine color='green' style={{ fill: "grey" }}/>
-						<SparklinesReferenceLine type="avg" />
-					</Sparklines>
-				</td>
+				<td><Chart data={temps} color="#38adc0" units="℃" /></td>
+				<td><Chart data={wind} color="#74b700" units="km/h" /></td>
+				<td><Chart data={humidity} color="#d2c65a" units="%" /></td>
 			</tr>
 		)
 	}
@@ -45,10 +32,10 @@ class WeatherList extends Component {
 			<table className="table table-hover">
 				<thead>
 					<tr>
-						<th><h4>City <span className="click">(click for current weather)</span></h4></th>
-						<th><h4>Temperature <span className="click">(℃)</span></h4></th>
-						<th><h4>Wind <span className="click">(km/h)</span></h4></th>
-						<th><h4>Humidity <span className="click">(%)</span></h4></th>
+						<th className="cityHead"><h5>City <span className="subheading">(current weather)</span></h5></th>
+						<th className="chartHead"><h5>Temperature <span className="subheading">(℃)</span></h5></th>
+						<th className="chartHead"><h5>Wind <span className="subheading">(km/h)</span></h5></th>
+						<th className="chartHead"><h5>Humidity <span className="subheading">(%)</span></h5></th>
 					</tr>
 				</thead>
 				<tbody>
